@@ -1,0 +1,669 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+<title>Andiamo in Italia — Guida Viaggio</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+:root {
+  --white: #FFFFFF;
+  --off-white: #F9F7F4;
+  --cream: #F2EDE5;
+  --warm-sand: #EDE6D8;
+  --stone: #DDD5C4;
+  --terra: #9B6B4A;
+  --terra-light: #B8875E;
+  --terra-pale: #F0E4D7;
+  --sage: #6B7C62;
+  --sea: #4A6B7A;
+  --text: #1E1A15;
+  --text-mid: #5C5248;
+  --text-soft: #9A9088;
+  --line: #E4DDD0;
+  --radius: 16px;
+}
+* { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
+html, body { height: 100%; font-family: 'DM Sans', sans-serif; background: var(--off-white); color: var(--text); max-width: 430px; margin: 0 auto; overflow: hidden; }
+.app { display: flex; flex-direction: column; height: 100vh; height: 100dvh; overflow: hidden; }
+
+.lang-toggle { display: flex; align-items: center; background: var(--cream); border-radius: 20px; overflow: hidden; border: 1px solid var(--line); flex-shrink: 0; margin: 0 6px 0 4px; }
+.lang-opt { font-family: 'DM Sans', sans-serif; font-size: 8px; font-weight: 500; letter-spacing: .5px; padding: 4px 7px; border: none; background: none; cursor: pointer; color: var(--text-soft); transition: all .2s; }
+.lang-opt.active { background: var(--terra); color: white; border-radius: 20px; }
+
+.top-nav { background: var(--white); border-bottom: 1px solid var(--line); padding: 0 4px; display: flex; align-items: center; gap: 0; flex-shrink: 0; height: 56px; }
+.nav-tab { display: flex; flex-direction: column; align-items: center; gap: 2px; padding: 6px 2px; border: none; background: none; cursor: pointer; border-radius: 10px; white-space: nowrap; flex: 1 1 auto; min-width: 0; position: relative; }
+.nav-tab.active::after { content: ''; position: absolute; bottom: 0; left: 50%; transform: translateX(-50%); width: 18px; height: 2px; background: var(--terra); border-radius: 2px; }
+.tab-icon svg { width: 20px; height: 20px; stroke: var(--text-soft); stroke-width: 1.5; fill: none; transition: stroke .2s; }
+.nav-tab.active .tab-icon svg { stroke: var(--terra); }
+.tab-label { font-size: 8.5px; font-weight: 500; letter-spacing: 0.2px; text-transform: uppercase; color: var(--text-soft); transition: color .2s; }
+.nav-tab.active .tab-label { color: var(--terra); }
+
+.screen { display: none; flex: 1; overflow-y: auto; flex-direction: column; -webkit-overflow-scrolling: touch; }
+.screen.active { display: flex; animation: fadeUp .25s ease; }
+@keyframes fadeUp { from { opacity:0; transform: translateY(5px) } to { opacity:1; transform: none } }
+
+body.lang-en .it-text { display: none !important; }
+body.lang-it .en-text { display: none !important; }
+
+.home-hero { background: var(--white); padding: 40px 28px 26px; text-align: center; border-bottom: 1px solid var(--line); position: relative; }
+.home-hero::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 2px; background: linear-gradient(90deg, transparent, var(--terra-light), transparent); }
+.home-eyebrow { font-size: 9px; font-weight: 400; letter-spacing: 3px; text-transform: uppercase; color: var(--terra); margin-bottom: 10px; }
+.home-welcome { font-family: 'Cormorant Garamond', serif; font-size: 44px; font-weight: 300; line-height: 1.05; color: var(--text); margin-bottom: 10px; font-style: italic; }
+.home-ornament { display: flex; align-items: center; gap: 10px; justify-content: center; margin: 10px 0 10px; }
+.home-ornament::before, .home-ornament::after { content: ''; flex: 1; max-width: 44px; height: 1px; background: var(--terra-light); opacity: .5; }
+.home-ornament span { color: var(--terra); font-size: 9px; letter-spacing: 3px; }
+.home-property { font-family: 'Cormorant Garamond', serif; font-size: 16px; color: var(--text-mid); font-weight: 400; }
+
+.home-grid { padding: 22px 18px 8px; }
+.grid-eyebrow { font-size: 9px; letter-spacing: 2px; text-transform: uppercase; color: var(--text-soft); margin-bottom: 14px; text-align: center; }
+.icon-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 9px; }
+.icon-btn { display: flex; flex-direction: column; align-items: center; gap: 8px; background: var(--white); border: 1px solid var(--line); border-radius: var(--radius); padding: 16px 6px 12px; cursor: pointer; transition: transform .15s, box-shadow .15s, border-color .15s; }
+.icon-btn:active { transform: scale(0.95); box-shadow: 0 4px 14px rgba(155,107,74,.15); border-color: var(--terra-light); }
+.btn-icon svg { width: 24px; height: 24px; stroke: var(--text-mid); stroke-width: 1.4; fill: none; }
+.btn-label { font-size: 9.5px; font-weight: 500; letter-spacing: 0.5px; text-transform: uppercase; color: var(--text-mid); text-align: center; line-height: 1.3; }
+
+.welcome-wrap { padding: 8px 18px 40px; }
+.welcome-card { background: var(--white); border: 1px solid var(--line); border-radius: var(--radius); padding: 20px 20px 16px; position: relative; overflow: hidden; }
+.welcome-card::before { content: '\201C'; font-family: 'Cormorant Garamond', serif; font-size: 90px; line-height: 1; color: var(--terra); opacity: .1; position: absolute; top: -6px; left: 10px; pointer-events: none; }
+.welcome-text { font-family: 'Cormorant Garamond', serif; font-size: 16px; font-style: italic; line-height: 1.85; color: var(--text-mid); padding-top: 10px; margin-bottom: 16px; }
+.welcome-author { display: flex; align-items: center; gap: 12px; padding-top: 13px; border-top: 1px solid var(--line); }
+.author-mono { width: 32px; height: 32px; border-radius: 50%; border: 1px solid var(--terra-light); display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+.author-mono svg { width: 14px; height: 14px; stroke: var(--terra); stroke-width: 1.5; fill: none; }
+.author-name { font-size: 13px; font-weight: 500; color: var(--text); }
+.author-role { font-size: 11px; color: var(--text-soft); }
+
+.page-header { background: var(--white); padding: 26px 22px 20px; border-bottom: 1px solid var(--line); position: relative; flex-shrink: 0; }
+.page-header::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 2px; background: linear-gradient(90deg, transparent, var(--terra-light), transparent); }
+.page-eyebrow { font-size: 9px; letter-spacing: 3px; text-transform: uppercase; color: var(--terra); margin-bottom: 4px; font-weight: 400; }
+.page-title { font-family: 'Cormorant Garamond', serif; font-size: 30px; font-weight: 300; color: var(--text); line-height: 1.1; }
+.page-body { padding: 16px 16px 60px; }
+
+.card { background: var(--white); border: 1px solid var(--line); border-radius: var(--radius); padding: 16px; margin-bottom: 9px; }
+.card-label { font-size: 9px; letter-spacing: 2.5px; text-transform: uppercase; color: var(--terra); margin-bottom: 11px; font-weight: 500; }
+.card p { font-size: 14px; line-height: 1.78; color: var(--text-mid); }
+.card strong { color: var(--text); font-weight: 500; }
+.info-row { display: flex; justify-content: space-between; align-items: center; padding: 10px 0; border-bottom: 1px solid var(--line); gap: 10px; }
+.info-row:last-child { border-bottom: none; padding-bottom: 0; }
+.info-label { font-size: 12px; color: var(--text-soft); }
+.info-value { font-size: 13px; font-weight: 500; color: var(--text); text-align: right; max-width: 62%; }
+
+/* DAY CARD */
+.day-card { background: var(--white); border: 1px solid var(--line); border-radius: var(--radius); overflow: hidden; margin-bottom: 10px; }
+.day-band { background: var(--text); padding: 12px 16px; display: flex; align-items: baseline; gap: 10px; }
+.day-num { font-family: 'Cormorant Garamond', serif; font-size: 26px; font-weight: 300; color: var(--terra-light); line-height: 1; }
+.day-date { font-size: 10px; letter-spacing: 1.5px; text-transform: uppercase; color: rgba(255,255,255,.75); }
+.day-place { font-family: 'Cormorant Garamond', serif; font-size: 15px; color: white; margin-left: auto; font-style: italic; }
+.day-body { padding: 15px 16px 4px; }
+.day-body p { font-size: 13.5px; line-height: 1.75; color: var(--text-mid); }
+
+/* APPROFONDIMENTO ACCORDION */
+details.approf { border-top: 1px solid var(--line); margin-top: 12px; }
+details.approf summary { list-style: none; cursor: pointer; padding: 12px 0; display: flex; align-items: center; justify-content: space-between; font-size: 11px; letter-spacing: 1px; text-transform: uppercase; color: var(--terra); font-weight: 500; }
+details.approf summary::-webkit-details-marker { display: none; }
+details.approf summary::after { content: '+'; font-size: 16px; color: var(--terra); transition: transform .2s; }
+details.approf[open] summary::after { content: '–'; }
+.approf-body { padding-bottom: 14px; }
+.approf-item { padding: 10px 0; border-top: 1px solid var(--line); }
+.approf-item:first-child { border-top: none; padding-top: 0; }
+.approf-name { font-family: 'DM Sans', sans-serif; font-size: 14.5px; font-weight: 700; letter-spacing: .2px; color: var(--text); margin-bottom: 4px; }
+.approf-desc { font-size: 12.5px; line-height: 1.65; color: var(--text-mid); }
+
+/* PLACE CARD (alloggio) */
+.place-card { background: var(--white); border: 1px solid var(--line); border-radius: var(--radius); padding: 14px 16px; margin-bottom: 9px; display: flex; gap: 13px; }
+.place-dot { width: 7px; height: 7px; border-radius: 50%; background: var(--terra); flex-shrink: 0; margin-top: 7px; }
+.place-name { font-family: 'Cormorant Garamond', serif; font-size: 19px; font-weight: 400; color: var(--text); margin-bottom: 3px; }
+.place-desc { font-size: 13px; line-height: 1.65; color: var(--text-mid); margin-bottom: 6px; }
+.place-dist { font-size: 10px; color: var(--terra); font-weight: 500; letter-spacing: 1px; text-transform: uppercase; }
+
+.info-box { background: var(--terra-pale); border: 1px solid rgba(155,107,74,.2); border-radius: var(--radius); padding: 14px; margin-bottom: 9px; }
+.info-box-label { font-size: 9px; letter-spacing: 2px; text-transform: uppercase; color: var(--terra); margin-bottom: 6px; font-weight: 500; }
+.info-box p { font-size: 13px; line-height: 1.7; color: var(--text-mid); }
+.info-box strong { color: var(--text); font-weight: 500; }
+
+/* CONTACT BAR */
+.contact-bar { background: var(--text); border-radius: var(--radius); padding: 16px 16px; margin-bottom: 9px; display: flex; align-items: center; justify-content: space-between; position: relative; overflow: hidden; }
+.contact-bar::before { content: ''; position: absolute; inset: 0; background: radial-gradient(circle at 80% 50%, rgba(155,107,74,.2), transparent 55%); }
+.contact-bar-text { position: relative; z-index: 1; }
+.contact-bar-lbl { font-size: 9px; letter-spacing: 2px; text-transform: uppercase; color: rgba(255,255,255,.4); margin-bottom: 2px; }
+.contact-bar-name { font-family: 'Cormorant Garamond', serif; font-size: 18px; color: white; font-weight: 300; }
+.contact-bar-btn { position: relative; z-index: 1; background: var(--terra); border: none; border-radius: 100px; color: white; font-family: 'DM Sans', sans-serif; font-size: 9px; letter-spacing: 1.5px; text-transform: uppercase; padding: 8px 14px; cursor: pointer; font-weight: 500; text-decoration: none; display: flex; align-items: center; gap: 5px; transition: opacity .2s; }
+.contact-bar-btn svg { width: 11px; height: 11px; stroke: white; stroke-width: 2; fill: none; }
+.contact-bar-btn:active { opacity: .75; }
+
+.sos-card { background: var(--white); border: 1px solid var(--line); border-radius: var(--radius); padding: 14px; margin-bottom: 9px; display: flex; align-items: center; gap: 13px; }
+.sos-icon { width: 42px; height: 42px; border-radius: 12px; border: 1px solid var(--line); display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+.sos-icon svg { width: 20px; height: 20px; fill: none; stroke-width: 1.5; stroke: var(--terra); }
+.sos-info { flex: 1; }
+.sos-name { font-size: 13px; font-weight: 500; color: var(--text); margin-bottom: 2px; }
+.sos-desc { font-size: 11px; color: var(--text-soft); line-height: 1.4; }
+.call-btn { display: flex; align-items: center; gap: 5px; background: var(--text); color: white; border: none; border-radius: 100px; font-family: 'DM Sans', sans-serif; font-size: 12px; font-weight: 500; padding: 7px 12px; cursor: pointer; text-decoration: none; transition: opacity .2s; white-space: nowrap; }
+.call-btn:active { opacity: .75; }
+.call-btn svg { width: 11px; height: 11px; stroke: white; stroke-width: 2; fill: none; }
+
+/* STEPS (ricette) */
+.step-item { display: flex; gap: 14px; padding: 12px 0; border-bottom: 1px solid var(--line); }
+.step-item:last-child { border-bottom: none; padding-bottom: 0; }
+.step-num { font-family: 'Cormorant Garamond', serif; font-size: 28px; font-weight: 300; color: var(--terra); line-height: 1; flex-shrink: 0; width: 20px; text-align: right; margin-top: -3px; }
+.step-desc { font-size: 13px; line-height: 1.6; color: var(--text-mid); }
+.ingr-tag-row { display: flex; flex-wrap: wrap; gap: 5px; margin-bottom: 12px; }
+.ingr-tag { background: var(--cream); border-radius: 100px; padding: 4px 10px; font-size: 11px; color: var(--text-mid); }
+
+.badge { display: inline-flex; align-items: center; gap: 6px; background: var(--sage); color: white; font-size: 9px; letter-spacing: 2px; text-transform: uppercase; font-weight: 500; padding: 5px 12px; border-radius: 100px; margin-bottom: 12px; }
+</style>
+</head>
+<body class="lang-it">
+<div class="app">
+
+  <!-- TOP NAV -->
+  <nav class="top-nav">
+    <button class="nav-tab active" onclick="showScreen('home',this)">
+      <span class="tab-icon"><svg viewBox="0 0 24 24"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg></span>
+      <span class="tab-label">Home</span>
+    </button>
+    <button class="nav-tab" onclick="showScreen('programma',this)">
+      <span class="tab-icon"><svg viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg></span>
+      <span class="tab-label"><span class="it-text">Programma</span><span class="en-text">Itinerary</span></span>
+    </button>
+    <button class="nav-tab" onclick="showScreen('alloggio',this)">
+      <span class="tab-icon"><svg viewBox="0 0 24 24"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/></svg></span>
+      <span class="tab-label"><span class="it-text">Alloggio</span><span class="en-text">Stays</span></span>
+    </button>
+    <button class="nav-tab" onclick="showScreen('info',this)">
+      <span class="tab-icon"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="12"/><line x1="12" y1="8" x2="12.01" y2="8"/></svg></span>
+      <span class="tab-label it-text">Info</span><span class="tab-label en-text">Info</span>
+    </button>
+    <button class="nav-tab" onclick="showScreen('contatti',this)">
+      <span class="tab-icon"><svg viewBox="0 0 24 24"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07 19.5 19.5 0 01-6-6 19.79 19.79 0 01-3.07-8.67A2 2 0 014.11 2h3a2 2 0 012 1.72c.12.9.34 1.79.65 2.65a2 2 0 01-.45 2.11L8.09 9.91a16 16 0 006 6l1.43-1.43a2 2 0 012.11-.45c.86.31 1.75.53 2.65.65A2 2 0 0122 16.92z"/></svg></span>
+      <span class="tab-label"><span class="it-text">Contatti</span><span class="en-text">Contacts</span></span>
+    </button>
+    <div class="lang-toggle">
+      <button class="lang-opt active" id="btn-it" onclick="setLang('it')">IT</button>
+      <button class="lang-opt" id="btn-en" onclick="setLang('en')">EN</button>
+    </div>
+  </nav>
+
+  <!-- ═══ HOME ═══ -->
+  <div id="home" class="screen active">
+    <div class="home-hero">
+      <div class="home-eyebrow it-text">9 – 15 Ottobre 2026</div>
+      <div class="home-eyebrow en-text">October 9 – 15, 2026</div>
+      <img src="https://ik.imagekit.io/2gkrpnbbol/logo_edited.png" alt="Andiamo in Italia" style="height:90px;width:auto;object-fit:contain;margin:6px 0 10px;">
+      <div class="home-ornament"><span>✦</span></div>
+      <div class="home-property it-text">Crema · Franciacorta · Milano</div>
+      <div class="home-property en-text">Crema · Franciacorta · Milan</div>
+    </div>
+    <div class="home-grid">
+      <div class="grid-eyebrow it-text">Accesso rapido</div>
+      <div class="grid-eyebrow en-text">Quick access</div>
+      <div class="icon-grid">
+        <button class="icon-btn" onclick="goTo('programma',1)">
+          <span class="btn-icon"><svg viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg></span>
+          <span class="btn-label"><span class="it-text">Programma</span><span class="en-text">Itinerary</span></span>
+        </button>
+        <button class="icon-btn" onclick="goTo('alloggio',2)">
+          <span class="btn-icon"><svg viewBox="0 0 24 24"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/></svg></span>
+          <span class="btn-label"><span class="it-text">Alloggio</span><span class="en-text">Stays</span></span>
+        </button>
+        <button class="icon-btn" onclick="goTo('info',3)">
+          <span class="btn-icon"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="12"/><line x1="12" y1="8" x2="12.01" y2="8"/></svg></span>
+          <span class="btn-label it-text">Info pratiche</span><span class="btn-label en-text">Practical info</span>
+        </button>
+        <button class="icon-btn" onclick="goTo('contatti',4)">
+          <span class="btn-icon"><svg viewBox="0 0 24 24"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07 19.5 19.5 0 01-6-6 19.79 19.79 0 01-3.07-8.67A2 2 0 014.11 2h3a2 2 0 012 1.72c.12.9.34 1.79.65 2.65a2 2 0 01-.45 2.11L8.09 9.91a16 16 0 006 6l1.43-1.43a2 2 0 012.11-.45c.86.31 1.75.53 2.65.65A2 2 0 0122 16.92z"/></svg></span>
+          <span class="btn-label"><span class="it-text">Contatti</span><span class="en-text">Contacts</span></span>
+        </button>
+        <a href="mailto:andiamoinitalia123@gmail.com" class="icon-btn" style="text-decoration:none">
+          <span class="btn-icon"><svg viewBox="0 0 24 24"><path d="M4 4h16v16H4z"/><path d="M22 6l-10 7L2 6"/></svg></span>
+          <span class="btn-label it-text">Scrivici</span><span class="btn-label en-text">Email us</span>
+        </a>
+      </div>
+    </div>
+    <div class="welcome-wrap">
+      <div class="welcome-card">
+        <p class="welcome-text it-text">Sei invitata/invitato a partecipare a un viaggio in Italia dove potrai conoscere e parlare con gli italiani che incontrerai. Un'idea di viaggio pensata per chi vuole studiare la lingua e finalmente esercitarla con i madrelingua, senza la resistenza che spesso si trova negli hotel o nei ristoranti. Tutte le visite guidate, gli incontri e i corsi di cucina saranno in italiano — un'insegnante ti aiuterà in caso di necessità.</p>
+        <p class="welcome-text en-text">You're invited to join a trip to Italy where you'll get to know and talk with the Italians you meet along the way. A trip designed for those who want to study the language and finally practise it with native speakers, without the resistance often found in hotels or restaurants. All guided tours, meetings and cooking classes will be in Italian — a teacher will be on hand whenever you need help.</p>
+        <div class="welcome-author">
+          <div class="author-mono"><svg viewBox="0 0 24 24"><path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2"/><circle cx="12" cy="7" r="4"/></svg></div>
+          <div>
+            <div class="author-name">Alessandra &amp; Greta</div>
+            <div class="author-role it-text">Responsabile del viaggio &amp; insegnante</div>
+            <div class="author-role en-text">Trip coordinator &amp; teacher</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══ PROGRAMMA ═══ -->
+  <div id="programma" class="screen">
+    <div class="page-header">
+      <div class="page-eyebrow it-text">Giorno per giorno</div>
+      <div class="page-eyebrow en-text">Day by day</div>
+      <div class="page-title it-text">Programma</div>
+      <div class="page-title en-text">Itinerary</div>
+    </div>
+    <div class="page-body">
+
+      <!-- GIORNO 1 -->
+      <div class="day-card">
+        <div class="day-band">
+          <div class="day-num">1</div>
+          <div class="day-date it-text">Venerdì 9 ottobre</div>
+          <div class="day-date en-text">Friday, October 9</div>
+          <div class="day-place">Crema</div>
+        </div>
+        <div class="day-body">
+          <p class="it-text"><strong>Arrivo</strong> nel pomeriggio: un autista privato ti accompagna dall'aeroporto a <strong>Crema</strong>, dove alloggerai due notti nel centro storico. Ad accoglierti l'<strong>insegnante</strong> e la <strong>responsabile del viaggio</strong>, a tua disposizione per tutto il soggiorno — in stanza un piccolo omaggio di benvenuto.<br><br><strong>Sera:</strong> passeggiata nel centro e <strong>cena di benvenuto</strong> in un ristorante tipico — la tua prima occasione per chiacchierare in italiano con i nostri amici.</p>
+          <p class="en-text"><strong>Arrival</strong> in the afternoon: a private driver takes you from the airport to <strong>Crema</strong>, where you'll stay two nights in the historic centre. You'll be welcomed by your <strong>teacher</strong> and the <strong>trip coordinator</strong>, available throughout your stay — a small welcome gift awaits in your room.<br><br><strong>Evening:</strong> a stroll through the centre and a <strong>welcome dinner</strong> at a traditional restaurant — your first chance to chat in Italian with our Italian friends.</p>
+        </div>
+      </div>
+
+      <!-- GIORNO 2 -->
+      <div class="day-card">
+        <div class="day-band">
+          <div class="day-num">2</div>
+          <div class="day-date it-text">Sabato 10 ottobre</div>
+          <div class="day-date en-text">Saturday, October 10</div>
+          <div class="day-place">Crema</div>
+        </div>
+        <div class="day-body">
+          <p class="it-text"><strong>Mattina:</strong> il grande mercato coperto cittadino, poi corso di cucina con la <strong>Confraternita del Tortello Cremasco</strong> (impareremo i famosi tortelli dal ripieno segreto) — corso e pranzo alla Casa del Pellegrino, cooperativa sociale.<br><br><strong>Pomeriggio:</strong> visita guidata al <strong>Santuario di Santa Maria della Croce</strong> e passeggiata nel centro storico, tra Duomo e Museo Civico — con la tua intervista con la guida.<br><br><strong>Sera:</strong> libera, con i nostri consigli sui ristoranti; possibile concerto al Teatro San Domenico.</p>
+          <p class="en-text"><strong>Morning:</strong> the city's large covered market, then a cooking class with the <strong>Confraternita del Tortello Cremasco</strong> (learn the famous tortelli with their secret filling) — class and lunch at Casa del Pellegrino, a social cooperative.<br><br><strong>Afternoon:</strong> guided visit to the <strong>Santuario di Santa Maria della Croce</strong> and a walk through the old town, including the Duomo and Museo Civico — with your interview with the guide.<br><br><strong>Evening:</strong> free, with our restaurant suggestions; a concert at Teatro San Domenico may also be possible.</p>
+
+          <details class="approf">
+            <summary><span class="it-text">Scopri Crema</span><span class="en-text">Discover Crema</span></summary>
+            <div class="approf-body">
+              <div class="approf-item">
+                <div class="approf-name">Santuario di Santa Maria della Croce</div>
+                <p class="approf-desc it-text">Uno dei più significativi esempi di architettura rinascimentale lombarda, nato da un episodio del 1490 legato a un'apparizione mariana. Progettato da Giovanni Battagio, allievo della scuola del Bramante: colpisce per la pianta centrale, la grande cupola ottagonale e il ricco apparato decorativo interno.</p>
+                <p class="approf-desc en-text">One of the finest examples of Renaissance architecture in Lombardy, built following a reported Marian apparition in 1490. Designed by Giovanni Battagio, a pupil of the Bramante school — notable for its central plan, large octagonal dome and rich interior decoration.</p>
+              </div>
+              <div class="approf-item">
+                <div class="approf-name it-text">Duomo di Crema</div>
+                <div class="approf-name en-text">Crema Cathedral</div>
+                <p class="approf-desc it-text">Dedicato a Santa Maria Assunta, è il principale luogo di culto della città. Costruito tra il 1284 e il 1341, è un ottimo esempio di gotico lombardo, con facciata in cotto e interno ricco di opere d'arte e affreschi.</p>
+                <p class="approf-desc en-text">Dedicated to Santa Maria Assunta, the city's main place of worship. Built between 1284 and 1341, a fine example of Lombard Gothic style with a terracotta façade and an interior rich in artworks and frescoes.</p>
+              </div>
+              <div class="approf-item">
+                <div class="approf-name it-text">Palazzo Comunale</div>
+                <div class="approf-name en-text">Town Hall</div>
+                <p class="approf-desc it-text">Si affaccia su Piazza Duomo. Costruito durante il dominio della Serenissima, racconta il legame tra Crema e Venezia attraverso i suoi portici e gli stemmi dei podestà veneziani. Oggi è ancora il cuore della vita amministrativa cittadina.</p>
+                <p class="approf-desc en-text">Overlooking Piazza Duomo. Built under Venetian rule, reflecting Crema's ties to Venice through its porticoes and the coats of arms of Venetian governors. Still the heart of the city's administrative life today.</p>
+              </div>
+              <div class="approf-item">
+                <div class="approf-name">Piazza Istria e Dalmazia</div>
+                <p class="approf-desc it-text">L'antico mercato ortofrutticolo e del pesce, cuore della vita quotidiana di un tempo. Curiosità: sotto la piazza è stata riscoperta un'antica ghiacciaia ottocentesca, usata per conservare carne e pesce prima dell'invenzione dei frigoriferi.</p>
+                <p class="approf-desc en-text">The former fruit, vegetable and fish market, once the heart of everyday city life. Fun fact: a 19th-century ice house was rediscovered beneath the square, once used to preserve meat and fish before refrigerators existed.</p>
+              </div>
+              <div class="approf-item">
+                <div class="approf-name">Piazza Trento e Trieste</div>
+                <p class="approf-desc it-text">Per secoli uno dei principali centri commerciali di Crema. Ospita il Mercato Austro Ungarico ottocentesco e l'ex Convento di San Domenico, oggi sede del Teatro San Domenico.</p>
+                <p class="approf-desc en-text">For centuries one of Crema's main commercial hubs. Home to the 19th-century Mercato Austro Ungarico and the former Convento di San Domenico, today the Teatro San Domenico.</p>
+              </div>
+              <div class="approf-item">
+                <div class="approf-name it-text">Ex Convento Sant'Agostino</div>
+                <div class="approf-name en-text">Former Convent of Sant'Agostino</div>
+                <p class="approf-desc it-text">Fondato nel 1439, fu per secoli centro religioso e di studio degli Agostiniani. Oggi ospita il Museo Civico di Crema e del Cremasco. Di grande valore l'affresco dell'Ultima Cena di Pietro da Cemmo (1507), ispirato al Cenacolo di Leonardo da Vinci.</p>
+                <p class="approf-desc en-text">Founded in 1439, for centuries a religious and study centre for the Augustinians. Today it houses the Museo Civico di Crema e del Cremasco. Notable is Pietro da Cemmo's 1507 fresco of the Last Supper, inspired by Leonardo's Cenacolo.</p>
+              </div>
+              <div class="approf-item">
+                <div class="approf-name">Palazzo Terni de' Gregory</div>
+                <p class="approf-desc it-text">Il miglior esempio di architettura rococò della città. Costruzione iniziata nel 1698 ma mai completata. Dal XIX secolo appartiene alla famiglia Terni de' Gregory, una delle più antiche di Crema.</p>
+                <p class="approf-desc en-text">The city's finest example of Rococo architecture. Construction began in 1698 but was never completed. Since the 19th century it has belonged to the Terni de' Gregory family, one of Crema's oldest.</p>
+              </div>
+              <div class="approf-item">
+                <div class="approf-name it-text">Il tortello cremasco</div>
+                <div class="approf-name en-text">Tortello cremasco</div>
+                <p class="approf-desc it-text">Il piatto simbolo di Crema: un tortello dal ripieno agrodolce unico nel suo genere, di origine rinascimentale, la cui ricetta esatta resta ancora oggi un segreto ben custodito.</p>
+                <p class="approf-desc en-text">Crema's signature dish: a tortello with a uniquely sweet-and-sour filling, of Renaissance origin, whose exact recipe remains a closely guarded secret to this day.</p>
+              </div>
+            </div>
+          </details>
+        </div>
+      </div>
+
+      <!-- GIORNO 3 -->
+      <div class="day-card">
+        <div class="day-band">
+          <div class="day-num">3</div>
+          <div class="day-date it-text">Domenica 11 ottobre</div>
+          <div class="day-date en-text">Sunday, October 11</div>
+          <div class="day-place it-text">Crema → Lago d'Iseo</div>
+          <div class="day-place en-text">Crema → Lake Iseo</div>
+        </div>
+        <div class="day-body">
+          <p class="it-text"><strong>Mattina:</strong> divertente <strong>caccia al tesoro</strong> tra i negozi del centro storico di Crema, poi pranzo leggero e trasferimento privato verso il <strong>lago d'Iseo</strong>.<br><br><strong>Pomeriggio:</strong> passeggiata guidata nella Riserva Naturale delle <strong>Torbiere del Sebino</strong>.<br><br><strong>Sera:</strong> relax in hotel con vista lago, <strong>piscina e SPA</strong>; cena in hotel o in uno dei ristoranti del centro (taxi disponibile).</p>
+          <p class="en-text"><strong>Morning:</strong> a fun <strong>treasure hunt</strong> through the shops of Crema's old town, then a light lunch and private transfer to <strong>Lake Iseo</strong>.<br><br><strong>Afternoon:</strong> a guided walk through the <strong>Torbiere del Sebino</strong> Nature Reserve.<br><br><strong>Evening:</strong> relax at a hotel with a lake view, <strong>pool and spa</strong>; dinner at the hotel or in one of the restaurants in town (taxi available).</p>
+
+          <details class="approf">
+            <summary><span class="it-text">Le Torbiere del Sebino</span><span class="en-text">The Torbiere del Sebino</span></summary>
+            <div class="approf-body">
+              <div class="approf-item">
+                <p class="approf-desc it-text">Le torbiere si formano quando acqua e vegetazione restano a contatto per migliaia di anni: le piante si trasformano lentamente in torba, un tempo scavata e usata come combustibile. Oggi la riserva è un rifugio per oltre 200 specie di uccelli — aironi, svassi, cormorani, garzette e molte altre di passo durante la migrazione — attraversata da canneti, laghetti e passerelle panoramiche.</p>
+                <p class="approf-desc en-text">Peat bogs form when water and vegetation remain in contact for thousands of years: plants slowly turn into peat, once dug up and used as fuel. Today the reserve is home to over 200 bird species — herons, grebes, cormorants, little egrets and many more during migration — crossed by reed beds, pools and scenic walkways.</p>
+              </div>
+            </div>
+          </details>
+        </div>
+      </div>
+
+      <!-- GIORNO 4 -->
+      <div class="day-card">
+        <div class="day-band">
+          <div class="day-num">4</div>
+          <div class="day-date it-text">Lunedì 12 ottobre</div>
+          <div class="day-date en-text">Monday, October 12</div>
+          <div class="day-place it-text">Franciacorta → Milano</div>
+          <div class="day-place en-text">Franciacorta → Milan</div>
+        </div>
+        <div class="day-body">
+          <p class="it-text"><strong>Mattina:</strong> visita guidata a una storica cantina della <strong>Franciacorta</strong>, tra vigneti e cantine interrate, con <strong>degustazione alla cieca</strong> (bendati, a indovinare i vini!), seguita dal pranzo con vini e specialità locali.<br><br><strong>Pomeriggio:</strong> trasferimento privato a <strong>Milano</strong>, sistemazione in hotel e tempo libero per rilassarti o passeggiare in centro.<br><br><strong>Sera:</strong> cena libera; se disponibile, possibilità di prenotare <strong>"La Traviata"</strong> alla Scala (ore 20:00, cena anticipata per chi partecipa).</p>
+          <p class="en-text"><strong>Morning:</strong> guided visit to a historic <strong>Franciacorta</strong> winery, among vineyards and underground cellars, with a <strong>blind wine-tasting</strong> (blindfolded — guess the wines!), followed by lunch with local wines and specialities.<br><br><strong>Afternoon:</strong> private transfer to <strong>Milan</strong>, hotel check-in and free time to relax or explore the centre.<br><br><strong>Evening:</strong> dinner on your own; subject to availability, tickets for <strong>"La Traviata"</strong> at La Scala may be booked (8:00 PM, early dinner for those attending).</p>
+        </div>
+      </div>
+
+      <!-- GIORNO 5 -->
+      <div class="day-card">
+        <div class="day-band">
+          <div class="day-num">5</div>
+          <div class="day-date it-text">Martedì 13 ottobre</div>
+          <div class="day-date en-text">Tuesday, October 13</div>
+          <div class="day-place">Milano</div>
+        </div>
+        <div class="day-body">
+          <p class="it-text"><strong>Mattina:</strong> il centro storico di <strong>Milano</strong> con guida esclusiva — il <strong>Duomo</strong> con vetrate e guglie, la <strong>Galleria Vittorio Emanuele</strong> e molti altri luoghi.<br><br><strong>Pranzo</strong> a <strong>Cascina Nascosta</strong>, antica cascina lombarda nel Parco Sempione dedicata oggi alla sostenibilità (orti urbani, laboratori) — con la tua intervista con la guida.<br><br><strong>Pomeriggio:</strong> passeggiata nel <strong>Parco Sempione</strong> e al Castello Sforzesco con una guida ambientale.<br><br><strong>Sera:</strong> cena libera.</p>
+          <p class="en-text"><strong>Morning:</strong> the historic centre of <strong>Milan</strong> with an exclusive guide — the <strong>Duomo</strong> with its stained glass and spires, the <strong>Galleria Vittorio Emanuele</strong> and many other sights.<br><br><strong>Lunch</strong> at <strong>Cascina Nascosta</strong>, a historic Lombard farmhouse in Parco Sempione now dedicated to sustainability (urban gardens, workshops) — with your interview with the guide.<br><br><strong>Afternoon:</strong> a walk through <strong>Parco Sempione</strong> and the Castello Sforzesco with an environmental guide.<br><br><strong>Evening:</strong> dinner on your own.</p>
+        </div>
+      </div>
+
+      <!-- GIORNO 6 -->
+      <div class="day-card">
+        <div class="day-band">
+          <div class="day-num">6</div>
+          <div class="day-date it-text">Mercoledì 14 ottobre</div>
+          <div class="day-date en-text">Wednesday, October 14</div>
+          <div class="day-place">Milano</div>
+        </div>
+        <div class="day-body">
+          <p class="it-text"><strong>Mattina:</strong> visita alla <strong>Pinacoteca di Brera</strong> con la nostra guida e passeggiata nell'adiacente Orto Botanico; pranzo in zona Brera.<br><br><strong>Pomeriggio:</strong> tempo libero in hotel, poi corso di cucina a casa di una <strong>cuoca milanese</strong> — cucinerete insieme i piatti della cena (non dimenticare la tua intervista!).<br><br><strong>Sera:</strong> cena finale, con alcuni amici italiani che si uniranno per festeggiare la fine del viaggio.</p>
+          <p class="en-text"><strong>Morning:</strong> visit to the <strong>Pinacoteca di Brera</strong> with our guide and a walk through the adjoining Botanical Garden; lunch in the Brera area.<br><br><strong>Afternoon:</strong> free time at the hotel, then a cooking session at the home of a <strong>Milanese cook</strong> — you'll cook the dinner dishes together (don't forget your interview!).<br><br><strong>Evening:</strong> final dinner, joined by some Italian friends to celebrate the end of the trip.</p>
+
+          <details class="approf">
+            <summary><span class="it-text">Le ricette della serata</span><span class="en-text">Tonight's recipes</span></summary>
+            <div class="approf-body">
+
+              <div class="approf-item">
+                <div class="approf-name it-text">Pesto alla genovese <span style="font-size:11px;color:var(--text-soft);font-family:'DM Sans',sans-serif;font-weight:400">— per 4 persone</span></div>
+                <div class="approf-name en-text">Pesto alla genovese <span style="font-size:11px;color:var(--text-soft);font-family:'DM Sans',sans-serif;font-weight:400">— serves 4</span></div>
+                <div class="ingr-tag-row">
+                  <span class="ingr-tag">50g basilico / basil</span><span class="ingr-tag">80g parmigiano</span><span class="ingr-tag">20g pecorino</span><span class="ingr-tag">30g pinoli / pine nuts</span><span class="ingr-tag it-text">1 spicchio d'aglio</span><span class="ingr-tag en-text">1 garlic clove</span><span class="ingr-tag">100ml olio EVO</span><span class="ingr-tag it-text">sale</span><span class="ingr-tag en-text">salt</span>
+                </div>
+                <p class="approf-desc it-text">Lavate e asciugate il basilico. Pestatelo nel mortaio con l'aglio e un pizzico di sale con movimenti circolari. Aggiungete i pinoli, poi i formaggi grattugiati. Versate l'olio a filo continuando a lavorare fino a una crema omogenea. Conservate in frigo coperto da un filo d'olio.</p>
+                <p class="approf-desc en-text">Wash and dry the basil. Crush it in a mortar with the garlic and a pinch of salt, using circular movements. Add the pine nuts, then the grated cheeses. Drizzle in the oil while continuing to work until smooth. Store in the fridge covered with a thin layer of oil.</p>
+              </div>
+
+              <div class="approf-item">
+                <div class="approf-name it-text">Caponata siciliana <span style="font-size:11px;color:var(--text-soft);font-family:'DM Sans',sans-serif;font-weight:400">— per 6 persone</span></div>
+                <div class="approf-name en-text">Caponata siciliana <span style="font-size:11px;color:var(--text-soft);font-family:'DM Sans',sans-serif;font-weight:400">— serves 6</span></div>
+                <div class="ingr-tag-row">
+                  <span class="ingr-tag it-text">1kg melanzane</span><span class="ingr-tag en-text">1kg aubergines</span><span class="ingr-tag it-text">400g sedano</span><span class="ingr-tag en-text">400g celery</span><span class="ingr-tag it-text">250g cipolle bianche</span><span class="ingr-tag en-text">250g white onions</span><span class="ingr-tag it-text">200g pomodori</span><span class="ingr-tag en-text">200g tomatoes</span><span class="ingr-tag it-text">200g olive verdi</span><span class="ingr-tag en-text">200g green olives</span><span class="ingr-tag it-text">50g capperi</span><span class="ingr-tag en-text">50g capers</span><span class="ingr-tag">50g pinoli</span><span class="ingr-tag it-text">60g zucchero</span><span class="ingr-tag en-text">60g sugar</span><span class="ingr-tag it-text">60g aceto di vino bianco</span><span class="ingr-tag en-text">60g white wine vinegar</span><span class="ingr-tag it-text">40g concentrato di pomodoro</span><span class="ingr-tag en-text">40g tomato paste</span>
+                </div>
+                <p class="approf-desc it-text">Affettate finemente cipolla e sedano, tagliate a metà le olive. Tagliate melanzane e pomodori a piccoli pezzi; tostate i pinoli in padella. Friggete le melanzane e asciugatele su carta assorbente. Soffriggete la cipolla, aggiungete sedano, capperi, olive, pinoli e pomodori; fate rosolare coperto per 15-20 minuti. A parte, unite aceto, concentrato e zucchero per la salsa agrodolce; versatela sulle verdure alzando la fiamma per far evaporare l'aceto. Spegnete e aggiungete le melanzane fritte.</p>
+                <p class="approf-desc en-text">Thinly slice the onion and celery, halve the olives. Cut the aubergines and tomatoes into small pieces; toast the pine nuts in a pan. Fry the aubergines and drain on paper towels. Sauté the onion, add celery, capers, olives, pine nuts and tomatoes; cover and cook for 15-20 minutes. Separately, mix vinegar, tomato paste and sugar for the sweet-and-sour sauce; pour over the vegetables and raise the heat to evaporate the vinegar. Turn off the heat and add the fried aubergines.</p>
+              </div>
+
+              <div class="approf-item">
+                <div class="approf-name it-text">Tiramisù <span style="font-size:11px;color:var(--text-soft);font-family:'DM Sans',sans-serif;font-weight:400">— per 4 persone</span></div>
+                <div class="approf-name en-text">Tiramisù <span style="font-size:11px;color:var(--text-soft);font-family:'DM Sans',sans-serif;font-weight:400">— serves 4</span></div>
+                <div class="ingr-tag-row">
+                  <span class="ingr-tag">300g mascarpone</span><span class="ingr-tag it-text">3 uova</span><span class="ingr-tag en-text">3 eggs</span><span class="ingr-tag it-text">80g zucchero</span><span class="ingr-tag en-text">80g sugar</span><span class="ingr-tag it-text">biscotti savoiardi</span><span class="ingr-tag en-text">ladyfinger biscuits</span><span class="ingr-tag it-text">200ml panna da montare</span><span class="ingr-tag en-text">200ml whipping cream</span><span class="ingr-tag it-text">caffè espresso</span><span class="ingr-tag en-text">espresso coffee</span><span class="ingr-tag it-text">cacao amaro</span><span class="ingr-tag en-text">unsweetened cocoa</span>
+                </div>
+                <p class="approf-desc it-text">Separate i tuorli dagli albumi. Montate i tuorli con lo zucchero fino a una crema chiara, poi aggiungete il mascarpone. Montate gli albumi a neve e incorporateli delicatamente. Bagnate i biscotti nel caffè e disponeteli in una teglia, coprite con la crema e ripetete gli strati. Spolverate con cacao amaro e riponete in frigorifero per qualche ora.</p>
+                <p class="approf-desc en-text">Separate the egg yolks from the whites. Beat the yolks with the sugar until pale and creamy, then add the mascarpone. Whip the egg whites to stiff peaks and fold in gently. Dip the biscuits in coffee and arrange in a dish, cover with the cream and repeat the layers. Dust with cocoa powder and refrigerate for a few hours.</p>
+              </div>
+
+            </div>
+          </details>
+        </div>
+      </div>
+
+      <!-- GIORNO 7 -->
+      <div class="day-card">
+        <div class="day-band">
+          <div class="day-num">7</div>
+          <div class="day-date it-text">Giovedì 15 ottobre</div>
+          <div class="day-date en-text">Thursday, October 15</div>
+          <div class="day-place it-text">Partenza</div>
+          <div class="day-place en-text">Departure</div>
+        </div>
+        <div class="day-body">
+          <p class="it-text">Giorno della partenza. Siamo certi che questa esperienza ti abbia aiutato a migliorare molto il tuo italiano, sia nella comprensione che nella conversazione, oltre a farti scoprire tre luoghi speciali del Bel Paese e conoscere nuovi amici italiani.</p>
+          <p class="en-text">Departure day. We're sure this experience has helped you improve your Italian a great deal, both in understanding and conversation, as well as introducing you to three special places in Italy and new Italian friends.</p>
+        </div>
+      </div>
+
+      <div class="welcome-wrap" style="padding:8px 0 20px">
+        <div class="welcome-card" style="margin-bottom:0">
+          <p class="welcome-text it-text">Vi auguriamo un sereno e sicuro ritorno a casa!</p>
+          <p class="welcome-text en-text">We wish you a safe and pleasant journey home!</p>
+          <div class="welcome-author">
+            <div class="author-mono"><svg viewBox="0 0 24 24"><path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2"/><circle cx="12" cy="7" r="4"/></svg></div>
+            <div>
+              <div class="author-name">Alessandra &amp; Greta</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ═══ ALLOGGIO ═══ -->
+  <div id="alloggio" class="screen">
+    <div class="page-header">
+      <div class="page-eyebrow it-text">Dove dormirai</div>
+      <div class="page-eyebrow en-text">Where you'll stay</div>
+      <div class="page-title it-text">Alloggio</div>
+      <div class="page-title en-text">Stays</div>
+    </div>
+    <div class="page-body">
+
+      <div class="place-card">
+        <div class="place-dot"></div>
+        <div>
+          <div class="place-name it-text">Crema — centro storico</div>
+          <div class="place-name en-text">Crema — historic centre</div>
+          <div class="place-desc it-text">2 notti (9-11 ottobre). Camera matrimoniale uso singola con bagno privato, in una bella struttura nel cuore del centro storico.</div>
+          <div class="place-desc en-text">2 nights (Oct 9-11). Double room for single use with private bathroom, in a lovely property in the heart of the old town.</div>
+          <div class="place-dist it-text">2 notti</div>
+          <div class="place-dist en-text">2 nights</div>
+        </div>
+      </div>
+
+      <div class="place-card">
+        <div class="place-dot"></div>
+        <div>
+          <div class="place-name it-text">Lago d'Iseo</div>
+          <div class="place-name en-text">Lake Iseo</div>
+          <div class="place-desc it-text">1 notte (11-12 ottobre). Hotel con vista lago, piscina e SPA, nella cittadina sul lago d'Iseo.</div>
+          <div class="place-desc en-text">1 night (Oct 11-12). Hotel with a lake view, pool and spa, in the town on Lake Iseo.</div>
+          <div class="place-dist it-text">1 notte</div>
+          <div class="place-dist en-text">1 night</div>
+        </div>
+      </div>
+
+      <div class="place-card">
+        <div class="place-dot"></div>
+        <div>
+          <div class="place-name">Milano</div>
+          <div class="place-desc it-text">3 notti (12-15 ottobre). Hotel in centro a Milano, base per le visite guidate e le serate libere.</div>
+          <div class="place-desc en-text">3 nights (Oct 12-15). Hotel in central Milan, your base for guided visits and free evenings.</div>
+          <div class="place-dist it-text">3 notti</div>
+          <div class="place-dist en-text">3 nights</div>
+        </div>
+      </div>
+
+      <div class="info-box">
+        <div class="info-box-label it-text">Da sapere</div>
+        <div class="info-box-label en-text">Good to know</div>
+        <p class="it-text">Le camere sono <strong>matrimoniali uso singola</strong> con bagno privato. Per chi viaggia in coppia è previsto uno sconto — chiedi ad Alessandra o Greta.</p>
+        <p class="en-text">Rooms are <strong>double for single use</strong> with a private bathroom. A discount is available for couples travelling together — just ask Alessandra or Greta.</p>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ═══ INFO ═══ -->
+  <div id="info" class="screen">
+    <div class="page-header">
+      <div class="page-eyebrow it-text">Da sapere</div>
+      <div class="page-eyebrow en-text">Good to know</div>
+      <div class="page-title it-text">Info pratiche</div>
+      <div class="page-title en-text">Practical info</div>
+    </div>
+    <div class="page-body">
+
+      <div class="card">
+        <div class="card-label it-text">Voli</div>
+        <div class="card-label en-text">Flights</div>
+        <div class="info-row">
+          <span class="info-label it-text">Andata · 9/10</span>
+          <span class="info-label en-text">Outbound · Oct 9</span>
+          <span class="info-value">Bristol 13:40 → Bergamo 16:45 (Ryanair)</span>
+        </div>
+        <div class="info-row">
+          <span class="info-label it-text">Ritorno · 15/10</span>
+          <span class="info-label en-text">Return · Oct 15</span>
+          <span class="info-value">Milano Malpensa 13:55 → Bristol 15:05 (Easyjet)</span>
+        </div>
+        <p style="margin-top:10px" class="it-text">Gli orari dei voli potrebbero subire modifiche a causa della disponibilità della compagnia aerea.</p>
+        <p style="margin-top:10px" class="en-text">Flight times may change depending on airline availability.</p>
+      </div>
+
+      <div class="card">
+        <div class="card-label it-text">Il viaggio comprende</div>
+        <div class="card-label en-text">Included in the trip</div>
+        <p class="it-text"><strong>Volo</strong> con assicurazione medica e bagaglio a mano da 10kg · <strong>trasporto privato</strong> dagli aeroporti e tra le tappe · <strong>hotel per 6 notti</strong> · rinfresco di benvenuto e prima cena · tutte le <strong>colazioni e i pranzi</strong> · <strong>visite guidate</strong> · ingressi a musei e chiese · <strong>due corsi di cucina</strong> · visita in cantina · caccia al tesoro · l'ultima cena con amici.</p>
+        <p class="en-text"><strong>Flight</strong> with medical insurance and 10kg hand luggage · <strong>private transport</strong> from the airports and between stops · <strong>hotel for 6 nights</strong> · welcome drinks and first dinner · all <strong>breakfasts and lunches</strong> · <strong>guided tours</strong> · museum and church entries · <strong>two cooking classes</strong> · winery visit · treasure hunt · final dinner with friends.</p>
+      </div>
+
+      <div class="card">
+        <div class="card-label it-text">Il viaggio NON comprende</div>
+        <div class="card-label en-text">Not included</div>
+        <p class="it-text"><strong>Cene libere</strong> e quelle facoltative nelle serate della Scala · vino o bibite extra nei pranzi/cene inclusi · trattamenti e massaggi <strong>SPA</strong> · <strong>biglietti del teatro</strong> · mance e spese personali.</p>
+        <p class="en-text"><strong>Free-choice dinners</strong> and optional evenings at La Scala · extra wine or drinks at included meals · <strong>spa</strong> treatments and massages · <strong>theatre tickets</strong> · tips and personal expenses.</p>
+      </div>
+
+      <div class="card">
+        <div class="card-label it-text">Costo &amp; gruppo</div>
+        <div class="card-label en-text">Cost &amp; group</div>
+        <div class="info-row">
+          <span class="info-label it-text">Quota di partecipazione</span>
+          <span class="info-label en-text">Trip cost</span>
+          <span class="info-value">£2.100</span>
+        </div>
+        <div class="info-row">
+          <span class="info-label it-text">Dimensione del gruppo</span>
+          <span class="info-label en-text">Group size</span>
+          <span class="info-value it-text">circa 8 persone</span>
+          <span class="info-value en-text">about 8 people</span>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ═══ CONTATTI ═══ -->
+  <div id="contatti" class="screen">
+    <div class="page-header">
+      <div class="page-eyebrow it-text">Siamo qui per te</div>
+      <div class="page-eyebrow en-text">We're here for you</div>
+      <div class="page-title it-text">Contatti</div>
+      <div class="page-title en-text">Contacts</div>
+    </div>
+    <div class="page-body">
+
+      <div class="contact-bar">
+        <div class="contact-bar-text">
+          <div class="contact-bar-lbl it-text">Responsabile del viaggio</div>
+          <div class="contact-bar-lbl en-text">Trip coordinator</div>
+          <div class="contact-bar-name">Greta</div>
+        </div>
+        <a href="tel:+393921545372" class="contact-bar-btn">
+          <svg viewBox="0 0 24 24"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07 19.5 19.5 0 01-6-6 19.79 19.79 0 01-3.07-8.67A2 2 0 014.11 2h3a2 2 0 012 1.72c.12.9.34 1.79.65 2.65a2 2 0 01-.45 2.11L8.09 9.91a16 16 0 006 6l1.43-1.43a2 2 0 012.11-.45c.86.31 1.75.53 2.65.65A2 2 0 0122 16.92z"/></svg>
+          <span class="it-text">Chiama</span><span class="en-text">Call</span>
+        </a>
+      </div>
+
+      <div class="card">
+        <div class="card-label it-text">Telefono</div>
+        <div class="card-label en-text">Phone</div>
+        <div class="info-row">
+          <span class="info-label">Italia</span>
+          <span class="info-value"><a href="tel:+393921545372" style="color:inherit;text-decoration:none">+39 392 1545372</a></span>
+        </div>
+        <div class="info-row">
+          <span class="info-label it-text">Regno Unito</span>
+          <span class="info-label en-text">United Kingdom</span>
+          <span class="info-value"><a href="tel:+4473159119" style="color:inherit;text-decoration:none">+44 73159119</a></span>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-label">Email</div>
+        <div class="info-row">
+          <span class="info-label it-text">Organizzazione</span>
+          <span class="info-label en-text">Organisation</span>
+          <span class="info-value"><a href="mailto:andiamoinitalia123@gmail.com" style="color:inherit;text-decoration:none">andiamoinitalia123@gmail.com</a></span>
+        </div>
+        <div class="info-row">
+          <span class="info-label">Greta</span>
+          <span class="info-value"><a href="mailto:gretacazzamalli70@hotmail.com" style="color:inherit;text-decoration:none">gretacazzamalli70@hotmail.com</a></span>
+        </div>
+      </div>
+
+      <div class="sos-card">
+        <div class="sos-icon"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg></div>
+        <div class="sos-info">
+          <div class="sos-name it-text">Emergenze in Italia</div>
+          <div class="sos-name en-text">Emergencies in Italy</div>
+          <div class="sos-desc it-text">Numero unico di emergenza</div>
+          <div class="sos-desc en-text">Single emergency number</div>
+        </div>
+        <a href="tel:112" class="call-btn">
+          <svg viewBox="0 0 24 24"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07 19.5 19.5 0 01-6-6 19.79 19.79 0 01-3.07-8.67A2 2 0 014.11 2h3a2 2 0 012 1.72c.12.9.34 1.79.65 2.65a2 2 0 01-.45 2.11L8.09 9.91a16 16 0 006 6l1.43-1.43a2 2 0 012.11-.45c.86.31 1.75.53 2.65.65A2 2 0 0122 16.92z"/></svg>
+          112
+        </a>
+      </div>
+
+    </div>
+  </div>
+
+</div>
+
+<script>
+function showScreen(id, tabEl) {
+  document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+  document.querySelectorAll('.nav-tab').forEach(t => t.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+  if (tabEl) {
+    tabEl.classList.add('active');
+    tabEl.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' });
+  }
+  document.querySelector('.screen.active').scrollTop = 0;
+}
+function goTo(id, idx) {
+  const tabs = document.querySelectorAll('.nav-tab');
+  showScreen(id, tabs[idx] || null);
+}
+function setLang(lang) {
+  document.body.className = 'lang-' + lang;
+  document.getElementById('btn-it').classList.toggle('active', lang === 'it');
+  document.getElementById('btn-en').classList.toggle('active', lang === 'en');
+}
+</script>
+</body>
+</html>
