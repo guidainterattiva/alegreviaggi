@@ -109,6 +109,12 @@ details.approf[open] summary::after { content: '–'; }
 .approf-item { padding: 10px 0; border-top: 1px solid var(--line); }
 .approf-item:first-child { border-top: none; padding-top: 0; }
 .approf-name { font-family: 'DM Sans', sans-serif; font-size: 14.5px; font-weight: 700; letter-spacing: .2px; color: var(--text); margin-bottom: 4px; }
+.approf-list { margin: 6px 0 0 0; padding: 0; list-style: none; }
+.approf-list li { font-size: 12.5px; line-height: 1.6; color: var(--text-mid); padding: 3px 0 3px 14px; position: relative; }
+.approf-list li::before { content: '•'; color: var(--terra); position: absolute; left: 0; }
+.rest-link { display: inline-block; margin-top: 6px; padding: 4px 11px; border: 1px solid var(--terra-light); border-radius: 100px; font-size: 9.5px; font-weight: 500; letter-spacing: 1.2px; text-transform: uppercase; color: var(--terra); text-decoration: none; }
+.rest-link:active { opacity: .7; }
+.approf-note { font-size: 12.5px; line-height: 1.65; color: var(--text-soft); font-style: italic; margin-bottom: 10px; }
 .approf-desc { font-size: 12.5px; line-height: 1.65; color: var(--text-mid); }
 
 /* PLACE CARD (alloggio) */
@@ -325,6 +331,36 @@ details.approf[open] summary::after { content: '–'; }
               </div>
             </div>
           </details>
+
+          <details class="approf">
+            <summary><span class="it-text">Dove cenare a Crema</span><span class="en-text">Where to eat in Crema</span></summary>
+            <div class="approf-body">
+              <div class="approf-item">
+                <div class="approf-name">Food Factory</div>
+                <p class="approf-desc it-text">Atmosfera fresca, elegante e accogliente nella piazza centrale della città. Ottima la pizza.</p>
+                <p class="approf-desc en-text">Fresh, elegant and welcoming atmosphere on the city's central square. The pizza is excellent.</p>
+                <a class="rest-link" href="https://www.foodfactorygourmet.com/" target="_blank" rel="noopener"><span class="it-text">Sito web</span><span class="en-text">Website</span></a>
+              </div>
+              <div class="approf-item">
+                <div class="approf-name">Speranza</div>
+                <p class="approf-desc it-text">Ristorante e pizzeria: propone specialità della cucina amalfitana, piatti a base di pesce fresco e pizze cotte nel forno a legna.</p>
+                <p class="approf-desc en-text">Restaurant and pizzeria offering Amalfi-style specialities, fresh fish dishes and wood-fired pizzas.</p>
+                <a class="rest-link" href="https://www.ristorantepizzeriasperanzacrema.com/" target="_blank" rel="noopener"><span class="it-text">Sito web</span><span class="en-text">Website</span></a>
+              </div>
+              <div class="approf-item">
+                <div class="approf-name">Enoteca da Stelvio</div>
+                <p class="approf-desc it-text">In una vecchia cantina di un palazzo storico di Crema, il proprietario vi proporrà buon vino che accompagna bruschette, affettati, formaggi, primi, secondi e tanto altro.<br><em>Vi dobbiamo informare che c'è una scala per accedere.</em></p>
+                <p class="approf-desc en-text">In the old cellar of a historic building in Crema, the owner will serve you good wine to go with bruschetta, cured meats, cheeses, first and second courses and much more.<br><em>Please note: there is a staircase to get in.</em></p>
+                <a class="rest-link" href="https://maps.app.goo.gl/CXZsEHfceyXySoqi6?g_st=aw" target="_blank" rel="noopener"><span class="it-text">Mappa</span><span class="en-text">Map</span></a>
+              </div>
+              <div class="approf-item">
+                <div class="approf-name">Vero amore</div>
+                <p class="approf-desc it-text">In una piazza del centro storico, è un locale moderno che offre cene raffinate e sofisticate.</p>
+                <p class="approf-desc en-text">On a square in the historic centre, a modern place offering refined, sophisticated dinners.</p>
+                <a class="rest-link" href="https://laboratorioveroamore.com/" target="_blank" rel="noopener"><span class="it-text">Sito web</span><span class="en-text">Website</span></a>
+              </div>
+            </div>
+          </details>
         </div>
       </div>
 
@@ -337,8 +373,8 @@ details.approf[open] summary::after { content: '–'; }
           <div class="day-place en-text">Crema → Lake Iseo</div>
         </div>
         <div class="day-body">
-          <p class="it-text"><strong>Mattina:</strong> divertente <strong>caccia al tesoro</strong> nel centro storico di Crema, poi pranzo leggero e trasferimento privato verso il <strong>lago d'Iseo</strong>.<br><br><strong>Pomeriggio:</strong> passeggiata guidata nella Riserva Naturale delle <strong>Torbiere del Sebino</strong>.<br><br><strong>Sera:</strong> relax in hotel con vista lago, <strong>piscina e SPA</strong>; cena libera in hotel o in uno dei ristoranti del centro (taxi disponibile).</p>
-          <p class="en-text"><strong>Morning:</strong> a fun <strong>treasure hunt</strong> through the shops of Crema's old town, then a light lunch and private transfer to <strong>Lake Iseo</strong>.<br><br><strong>Afternoon:</strong> a guided walk through the <strong>Torbiere del Sebino</strong> Nature Reserve.<br><br><strong>Evening:</strong> relax at a hotel with a lake view, <strong>pool and spa</strong>; dinner at the hotel or in one of the restaurants in town (taxi available).</p>
+          <p class="it-text"><strong>Mattina:</strong> divertente <strong>caccia al tesoro</strong> nel centro storico di Crema, poi pranzo leggero e trasferimento privato verso il <strong>lago d'Iseo</strong>.<br><br><strong>Pomeriggio:</strong> passeggiata guidata nella Riserva Naturale delle <strong>Torbiere del Sebino</strong>.<br><br><strong>Sera:</strong> relax in hotel con vista lago, <strong>piscina e SPA</strong>; cena libera in hotel o in uno dei ristoranti del centro (taxi disponibile - escluso).<br><br>L'ingresso al <strong>percorso benessere</strong> può essere prenotato all'arrivo in hotel, mentre per i <strong>massaggi</strong> consigliamo la prenotazione anticipata.</p>
+          <p class="en-text"><strong>Morning:</strong> a fun <strong>treasure hunt</strong> through the shops of Crema's old town, then a light lunch and private transfer to <strong>Lake Iseo</strong>.<br><br><strong>Afternoon:</strong> a guided walk through the <strong>Torbiere del Sebino</strong> Nature Reserve.<br><br><strong>Evening:</strong> relax at a hotel with a lake view, <strong>pool and spa</strong>; dinner at the hotel or in one of the restaurants in town (taxi available — not included).<br><br>Access to the <strong>wellness area</strong> can be booked on arrival at the hotel, while for <strong>massages</strong> we recommend booking in advance.</p>
 
           <details class="approf">
             <summary><span class="it-text">Le Torbiere del Sebino</span><span class="en-text">The Torbiere del Sebino</span></summary>
@@ -363,6 +399,68 @@ details.approf[open] summary::after { content: '–'; }
         <div class="day-body">
           <p class="it-text"><strong>Mattina:</strong> visita guidata a una storica cantina della <strong>Franciacorta</strong>, tra vigneti e cantine interrate, con <strong>degustazione alla cieca</strong> (verremo bendati per indovinare i vini), seguita dal pranzo con vini e specialità locali.<br><br><strong>Pomeriggio:</strong> trasferimento privato a <strong>Milano</strong>, sistemazione in hotel e tempo libero per rilassarti o passeggiare in centro.<br><br><strong>Sera:</strong> cena libera — possiamo consigliare il ristorante <strong>Andry</strong> (via Rovello 10), vicino all'hotel e sempre aperto; nei dintorni potrete trovare molte altre scelte. Ore 20:00, inizio dell'opera lirica <strong>"La Traviata"</strong> di Giuseppe Verdi al Teatro alla Scala, che potete raggiungere in 10 minuti a piedi.</p>
           <p class="en-text"><strong>Morning:</strong> guided visit to a historic <strong>Franciacorta</strong> winery, among vineyards and underground cellars, with a <strong>blind wine-tasting</strong> (we'll be blindfolded to guess the wines), followed by lunch with local wines and specialities.<br><br><strong>Afternoon:</strong> private transfer to <strong>Milan</strong>, hotel check-in and free time to relax or explore the centre.<br><br><strong>Evening:</strong> dinner on your own — we can recommend <strong>Andry</strong> restaurant (via Rovello 10), near the hotel and always open; you'll find plenty of other options nearby. At 8:00 PM, the opera <strong>"La Traviata"</strong> by Giuseppe Verdi begins at Teatro alla Scala, a 10-minute walk away.</p>
+
+          <details class="approf">
+            <summary><span class="it-text">Dove cenare a Milano</span><span class="en-text">Where to eat in Milan</span></summary>
+            <div class="approf-body">
+              <p class="approf-note it-text">Sarebbe meglio telefonare prima per prenotare, oppure chiedete a noi.</p>
+              <p class="approf-note en-text">It's best to call ahead to book, or just ask us.</p>
+              <div class="approf-item">
+                <div class="approf-name">Risoelatte</div>
+                <p class="approf-desc it-text">Ristorante storico vicino al Duomo per assaporare i piatti della tradizione milanese. Atmosfera accogliente e arredamento vintage.</p>
+                <p class="approf-desc en-text">A historic restaurant near the Duomo to enjoy traditional Milanese dishes. Welcoming atmosphere and vintage décor.</p>
+                <a class="rest-link" href="https://www.risoelatte.com/" target="_blank" rel="noopener"><span class="it-text">Sito web</span><span class="en-text">Website</span></a>
+              </div>
+              <div class="approf-item">
+                <div class="approf-name">Osteria dei Binari</div>
+                <p class="approf-desc it-text">Elegante ristorante con un atrio e un'enorme veranda ricca di verde, dal tradizionale menù milanese. Non lontano dai Navigli.</p>
+                <p class="approf-desc en-text">Elegant restaurant with an atrium and a huge, leafy veranda, serving a traditional Milanese menu. Not far from the Navigli.</p>
+                <a class="rest-link" href="https://www.osteriadelbinari.it/" target="_blank" rel="noopener"><span class="it-text">Sito web</span><span class="en-text">Website</span></a>
+              </div>
+              <div class="approf-item">
+                <div class="approf-name">El Brellin</div>
+                <p class="approf-desc it-text">Si affaccia sul Naviglio Grande e sul pittoresco vicolo delle Lavandaie: ristorante storico ed elegante, ospitato in una casa del 1700, offre cucina tipica milanese.</p>
+                <p class="approf-desc en-text">Overlooking the Naviglio Grande and the picturesque Vicolo delle Lavandaie: a historic, elegant restaurant in an 18th-century house serving typical Milanese cuisine.</p>
+                <a class="rest-link" href="https://brellin.com/" target="_blank" rel="noopener"><span class="it-text">Sito web</span><span class="en-text">Website</span></a>
+              </div>
+              <div class="approf-item">
+                <div class="approf-name">Barzac</div>
+                <p class="approf-desc it-text">Cucina piacentina ed emiliana di alta qualità in un ambiente cordiale e familiare, a pochi passi dalla Stazione Centrale di Milano.</p>
+                <p class="approf-desc en-text">High-quality Piacenza and Emilia cuisine in a friendly, family atmosphere, a few steps from Milan Central Station.</p>
+                <a class="rest-link" href="https://barzacmilano.it/" target="_blank" rel="noopener"><span class="it-text">Sito web</span><span class="en-text">Website</span></a>
+              </div>
+              <div class="approf-item">
+                <div class="approf-name">Osteria Da Fortunata</div>
+                <p class="approf-desc it-text">In una affascinante vietta di Brera. Ogni giorno producono pasta fresca con ingredienti di alta qualità, rigorosamente fatta a mano, e si può guardare la preparazione come uno spettacolo.</p>
+                <p class="approf-desc en-text">In a charming little street in Brera. Every day they make fresh pasta from high-quality ingredients, strictly by hand, and you can watch it being prepared like a show.</p>
+                <a class="rest-link" href="https://maps.app.goo.gl/xesfcXKEtL4Nv5RKA?g_st=aw" target="_blank" rel="noopener"><span class="it-text">Mappa</span><span class="en-text">Map</span></a>
+              </div>
+              <div class="approf-item">
+                <div class="approf-name">Max Mariola</div>
+                <p class="approf-desc it-text">Per vivere un'esperienza del gusto proposta dallo chef Max. La carbonara è cucinata al tavolo davanti a voi!</p>
+                <p class="approf-desc en-text">A taste experience created by chef Max. The carbonara is cooked at your table, right in front of you!</p>
+                <a class="rest-link" href="https://maxmariolarestaurant.com/max-mariola-restaurant" target="_blank" rel="noopener"><span class="it-text">Sito web</span><span class="en-text">Website</span></a>
+              </div>
+              <div class="approf-item">
+                <div class="approf-name">Spontini</div>
+                <p class="approf-desc it-text">Per un trancio di pizza buono ed economico.</p>
+                <p class="approf-desc en-text">For a good, inexpensive slice of pizza.</p>
+                <a class="rest-link" href="https://maps.app.goo.gl/Pd3RBLZs4gZGfj3q9?g_st=aw" target="_blank" rel="noopener"><span class="it-text">Mappa</span><span class="en-text">Map</span></a>
+              </div>
+              <div class="approf-item">
+                <div class="approf-name">Materia Pizzeria</div>
+                <p class="approf-desc it-text">In centro a Milano, pizza classica recensita dal Gambero Rosso. Materie prime da produttori italiani e sostenibili.</p>
+                <p class="approf-desc en-text">In central Milan, classic pizza reviewed by Gambero Rosso. Ingredients from Italian, sustainable producers.</p>
+                <a class="rest-link" href="https://materiapizzeria.com/" target="_blank" rel="noopener"><span class="it-text">Sito web</span><span class="en-text">Website</span></a>
+              </div>
+              <div class="approf-item">
+                <div class="approf-name">Pizzeria Da Zero</div>
+                <p class="approf-desc it-text">Dal campo alla pizza, un progetto che vede coinvolti artigiani, territorio e prodotti unici.</p>
+                <p class="approf-desc en-text">From the field to the pizza: a project involving artisans, local land and unique products.</p>
+                <a class="rest-link" href="https://maps.app.goo.gl/NRsQwQoh8yot4EqL9?g_st=aw" target="_blank" rel="noopener"><span class="it-text">Mappa</span><span class="en-text">Map</span></a>
+              </div>
+            </div>
+          </details>
         </div>
       </div>
 
@@ -374,8 +472,30 @@ details.approf[open] summary::after { content: '–'; }
           <div class="day-place">Milano</div>
         </div>
         <div class="day-body">
-          <p class="it-text"><strong>Mattina:</strong> visita guidata al <strong>Duomo</strong> con le sue splendide vetrate, la <strong>Galleria Vittorio Emanuele</strong> e il centro storico.<br><br><strong>Pranzo</strong> in un delizioso ristorante del centro dove potrai intervistare le guide.<br><br><strong>Pomeriggio:</strong> passeggiata nel <strong>Parco Sempione</strong> e al Castello Sforzesco con una guida ambientale. Un percorso guidato ci porterà alla scoperta di curiosità, dei grandi alberi e di presenze inaspettate nel più grande parco del centro storico di Milano, il Parco Sempione. La passeggiata servirà anche a farci conoscere le importantissime funzioni dei parchi nelle città, spiegandoci i servizi che ci forniscono.<br><br><strong>Sera:</strong> cena libera.</p>
-          <p class="en-text"><strong>Morning:</strong> guided visit to the <strong>Duomo</strong> with its splendid stained glass, the <strong>Galleria Vittorio Emanuele</strong> and the historic centre.<br><br><strong>Lunch</strong> at a lovely restaurant in the centre, where you can interview the guides.<br><br><strong>Afternoon:</strong> a walk through <strong>Parco Sempione</strong> and the Castello Sforzesco with an environmental guide. A guided route will take us to discover curiosities, great trees and unexpected presences in Milan's largest historic-centre park, Parco Sempione. The walk will also introduce us to the vital role parks play in cities, explaining the services they provide us.<br><br><strong>Evening:</strong> dinner on your own.</p>
+          <p class="it-text"><strong>Mattina:</strong> visita guidata al <strong>Duomo</strong> con le sue splendide vetrate, la chiesa di <strong>San Satiro</strong>, il <strong>Castello Sforzesco</strong>, la <strong>Galleria Vittorio Emanuele</strong> e il centro storico.<br><br><strong>Pranzo</strong> in un delizioso ristorante del centro dove potrai intervistare le guide.<br><br><strong>Pomeriggio:</strong> passeggiata nel <strong>Parco Sempione</strong> e al Castello Sforzesco con una guida ambientale. Un percorso guidato ci porterà alla scoperta di curiosità, dei grandi alberi e di presenze inaspettate nel più grande parco del centro storico di Milano, il Parco Sempione. La passeggiata servirà anche a farci conoscere le importantissime funzioni dei parchi nelle città, spiegandoci i servizi che ci forniscono.<br><br><strong>Sera:</strong> cena libera (trovi i ristoranti che consigliamo nella giornata di lunedì).</p>
+          <p class="en-text"><strong>Morning:</strong> guided visit to the <strong>Duomo</strong> with its splendid stained glass, the church of <strong>San Satiro</strong>, the <strong>Castello Sforzesco</strong>, the <strong>Galleria Vittorio Emanuele</strong> and the historic centre.<br><br><strong>Lunch</strong> at a lovely restaurant in the centre, where you can interview the guides.<br><br><strong>Afternoon:</strong> a walk through <strong>Parco Sempione</strong> and the Castello Sforzesco with an environmental guide. A guided route will take us to discover curiosities, great trees and unexpected presences in Milan's largest historic-centre park, Parco Sempione. The walk will also introduce us to the vital role parks play in cities, explaining the services they provide us.<br><br><strong>Evening:</strong> dinner on your own (you'll find our recommended restaurants in Monday's section).</p>
+
+          <details class="approf">
+            <summary><span class="it-text">Scopri Milano</span><span class="en-text">Discover Milan</span></summary>
+            <div class="approf-body">
+              <div class="approf-item">
+                <div class="approf-name it-text">Duomo di Milano</div>
+                <div class="approf-name en-text">Milan Cathedral</div>
+                <p class="approf-desc it-text">Costruzione iniziata nel 1386; stile soprattutto gotico, in marmo di Candoglia; celebre per guglie, statue, vetrate e la Madonnina sulla guglia maggiore.</p>
+                <p class="approf-desc en-text">Construction began in 1386; mainly Gothic style, built in Candoglia marble; famous for its spires, statues, stained glass and the Madonnina on the main spire.</p>
+              </div>
+              <div class="approf-item">
+                <div class="approf-name">Santa Maria presso San Satiro</div>
+                <p class="approf-desc it-text">Fine Quattrocento; stile rinascimentale, celebre per il finto coro prospettico di Bramante.</p>
+                <p class="approf-desc en-text">Late 15th century; Renaissance style, famous for Bramante's illusionistic perspective choir.</p>
+              </div>
+              <div class="approf-item">
+                <div class="approf-name">Castello Sforzesco</div>
+                <p class="approf-desc it-text">Ricostruito nel Quattrocento dagli Sforza; fortezza e residenza ducale, oggi sede di musei.</p>
+                <p class="approf-desc en-text">Rebuilt in the 15th century by the Sforza family; a fortress and ducal residence, now home to museums.</p>
+              </div>
+            </div>
+          </details>
         </div>
       </div>
 
@@ -387,8 +507,41 @@ details.approf[open] summary::after { content: '–'; }
           <div class="day-place">Milano</div>
         </div>
         <div class="day-body">
-          <p class="it-text"><strong>Mattina:</strong> visita alla <strong>Pinacoteca di Brera</strong> con la nostra guida e passeggiata nell'adiacente Orto Botanico; pranzo leggero in zona Brera.<br><br><strong>Pomeriggio:</strong> tempo libero, poi corso di cucina a casa di una <strong>cuoca milanese</strong> — cucinerete insieme i piatti della cena.<br><br><strong>Sera:</strong> cena finale, con alcuni amici italiani che si uniranno per festeggiare la fine del viaggio.</p>
-          <p class="en-text"><strong>Morning:</strong> visit to the <strong>Pinacoteca di Brera</strong> with our guide and a walk through the adjoining Botanical Garden; lunch in the Brera area.<br><br><strong>Afternoon:</strong> free time at the hotel, then a cooking session at the home of a <strong>Milanese cook</strong> — you'll cook the dinner dishes together (don't forget to do your interview).<br><br><strong>Evening:</strong> final dinner, joined by some Italian friends to celebrate the end of the trip.</p>
+          <p class="it-text"><strong>Mattina:</strong> visita alla <strong>Pinacoteca di Brera</strong> con la nostra guida e passeggiata nell'adiacente Orto Botanico; pranzo leggero in zona Brera.<br><br><strong>Pomeriggio:</strong> tempo libero, poi corso di cucina a casa di una <strong>cuoca milanese</strong> — cucinerete insieme i piatti della cena.<br><br><strong>Sera:</strong> cena finale per salutarci e festeggiare la fine del viaggio.</p>
+          <p class="en-text"><strong>Morning:</strong> visit to the <strong>Pinacoteca di Brera</strong> with our guide and a walk through the adjoining Botanical Garden; lunch in the Brera area.<br><br><strong>Afternoon:</strong> free time, then a cooking session at the home of a <strong>Milanese cook</strong> — you'll cook the dinner dishes together.<br><br><strong>Evening:</strong> final dinner to say goodbye and celebrate the end of the trip.</p>
+
+          <details class="approf">
+            <summary><span class="it-text">Scopri Milano</span><span class="en-text">Discover Milan</span></summary>
+            <div class="approf-body">
+              <div class="approf-item">
+                <div class="approf-name">Pinacoteca di Brera</div>
+                <p class="approf-desc it-text">Aperta nel 1809; importante museo d'arte di Milano, con capolavori dal Medioevo all'Ottocento.</p>
+                <p class="approf-desc en-text">Opened in 1809; one of Milan's major art museums, with masterpieces from the Middle Ages to the 19th century.</p>
+                <p class="approf-desc it-text" style="margin-top:8px"><strong>Alla Pinacoteca di Brera ci soffermeremo sulle opere:</strong></p>
+                <p class="approf-desc en-text" style="margin-top:8px"><strong>At the Pinacoteca di Brera we'll focus on these works:</strong></p>
+                <ul class="approf-list it-text">
+                  <li>"Cristo morto" di Andrea Mantegna</li>
+                  <li>"Telero di San Marco" di Bellini</li>
+                  <li>"Napoleone in gesso" di Canova</li>
+                  <li>Box restauro</li>
+                  <li>"Pala di Brera" di Piero della Francesca</li>
+                  <li>"Sposalizio della Vergine" di Raffaello</li>
+                  <li>"Cena in Emmaus" di Caravaggio</li>
+                  <li>"Il bacio" di Hayez</li>
+                </ul>
+                <ul class="approf-list en-text">
+                  <li>"Cristo morto" by Andrea Mantegna</li>
+                  <li>"Telero di San Marco" by Bellini</li>
+                  <li>"Napoleone in gesso" by Canova</li>
+                  <li>The restoration box</li>
+                  <li>"Pala di Brera" by Piero della Francesca</li>
+                  <li>"Sposalizio della Vergine" by Raphael</li>
+                  <li>"Cena in Emmaus" by Caravaggio</li>
+                  <li>"Il bacio" by Hayez</li>
+                </ul>
+              </div>
+            </div>
+          </details>
 
           <details class="approf">
             <summary><span class="it-text">Le ricette della serata</span><span class="en-text">Tonight's recipes</span></summary>
@@ -578,6 +731,7 @@ details.approf[open] summary::after { content: '–'; }
           <li>Vino o bibite extra nei pranzi/cene inclusi</li>
           <li>Trattamenti e massaggi <strong>SPA</strong></li>
           <li><strong>Biglietti del teatro</strong></li>
+          <li><strong>Taxi</strong> e trasporti personali</li>
           <li>Mance e spese personali</li>
         </ul>
         <ul class="bullet-list en-text">
@@ -585,6 +739,7 @@ details.approf[open] summary::after { content: '–'; }
           <li>Extra wine or drinks at included meals</li>
           <li><strong>Spa</strong> treatments and massages</li>
           <li><strong>Theatre tickets</strong></li>
+          <li><strong>Taxis</strong> and personal transport</li>
           <li>Tips and personal expenses</li>
         </ul>
       </div>
